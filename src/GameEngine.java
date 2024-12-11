@@ -2,8 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
-// added a comment
-
 public class GameEngine {
     private static final int FPS = 240;
     private static final int PADDLE_Y = 540;
