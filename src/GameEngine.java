@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
+// added a comment
+
 public class GameEngine {
     private static final int FPS = 240;
     private static final int PADDLE_Y = 540;
@@ -27,19 +29,30 @@ public class GameEngine {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                drawGame(g);
+                g.drawImage(background, 0, 0, 800, 600, null);
+                level.draw(g);
+                paddle.draw(g);
+                ball.draw(g);
             }
         };
         gamePanel.setPreferredSize(new Dimension(800, 600));
+        gamePanel.setFocusable(true);
+        gamePanel.requestFocusInWindow();
 
         setKeyStrokes();
     }
     private void setKeyStrokes(){
-        gamePanel.getInputMap().put(KeyStroke.getKeyStroke("LEFT"), "pressed left");
+//        InputMap inputMap = gamePanel.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+//        ActionMap actionMap = gamePanel.getRootPane().getActionMap();
+
+        gamePanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("LEFT"), "pressed left");
         gamePanel.getActionMap().put("pressed left", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                System.out.println("Left clicked");
                 paddle.setVelx(-PADDLE_MOVEMENT);
+                paddle.move();
+                gamePanel.repaint();
             }
         });
         gamePanel.getInputMap().put(KeyStroke.getKeyStroke("RIGHT"), "pressed right");
@@ -47,6 +60,8 @@ public class GameEngine {
             @Override
             public void actionPerformed(ActionEvent e) {
                 paddle.setVelx(PADDLE_MOVEMENT);
+                paddle.move();
+                gamePanel.repaint();
             }
         });
         gamePanel.getInputMap().put(KeyStroke.getKeyStroke("DOWN"), "pressed down");
@@ -67,15 +82,6 @@ public class GameEngine {
         Image ballImage = new ImageIcon("data/images/ball.png").getImage();
         ball = new Ball(400, 300, BALL_RADIUS, BALL_RADIUS, ballImage);
     }
-
-    // Draw the game elements
-    private void drawGame(Graphics g) {
-        g.drawImage(background, 0, 0, 800, 600, null);
-        level.draw(g);
-        paddle.draw(g);
-        ball.draw(g);
-    }
-
     // Get the game panel
     public JPanel getGamePanel() {
         return gamePanel;
