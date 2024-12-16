@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+
 public class GameEngine {
     private static final int FPS = 240;
     private static final int PADDLE_Y = 540;
@@ -49,8 +50,9 @@ public class GameEngine {
         gamePanel.getActionMap().put("pressed left", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Left");
                 paddle.setVelx(-PADDLE_MOVEMENT);
+                paddle.move();
+                gamePanel.repaint();
             }
         });
 
@@ -60,6 +62,8 @@ public class GameEngine {
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Right");
                 paddle.setVelx(PADDLE_MOVEMENT);
+                paddle.move();
+                gamePanel.repaint();
             }
         });
 
@@ -91,7 +95,6 @@ public class GameEngine {
         Image ballImage = new ImageIcon("data/images/ball.png").getImage();
         ball = new Ball(400, 300, BALL_RADIUS, BALL_RADIUS, ballImage);
     }
-
     // Get the game panel
     public JPanel getGamePanel() {
         return gamePanel;
