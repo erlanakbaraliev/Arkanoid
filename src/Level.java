@@ -44,4 +44,19 @@ public class Level{
             b.draw(g);
         }
     }
+
+    public boolean collides(Ball ball) {
+        Brick collidedWith = null;
+        for(Brick b : bricks) {
+            if(b.collides(ball)) {
+                collidedWith = b;
+                break;
+            }
+        }
+        if(collidedWith != null) {
+            bricks.remove(collidedWith);
+            return true;
+        }
+        return false;
+    }
 }
